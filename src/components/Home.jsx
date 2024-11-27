@@ -1,5 +1,10 @@
+import BrowseJobs from "./BrowseJobs";
 const Home = () => {
-  return <>Home</>;
+  return (
+    <>
+      <BrowseJobs />
+    </>
+  );
 };
 
 export default Home;
