@@ -6,7 +6,7 @@ import JobDetails from "./components/JobDetails";
 import Auth from "./components/Auth";
 import Navbar from "./components/Navbar";
 import { Provider } from "react-redux";
-import store from "./app/store";
+import store from "./store/store";
 
 const App = () => {
   return (
