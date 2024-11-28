@@ -5,19 +5,23 @@ import WishList from "./components/Wishlist";
 import JobDetails from "./components/JobDetails";
 import Auth from "./components/Auth";
 import Navbar from "./components/Navbar";
+import { Provider } from "react-redux";
+import store from "./app/store";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/jobs" element={<JobListings />} />
-        <Route path="/jobs/:id" element={<JobDetails />} />
-        <Route path="/wishlist" element={<WishList />} />
-        <Route path="/auth" element={<Auth />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/jobs" element={<JobListings />} />
+          <Route path="/jobs/:id" element={<JobDetails />} />
+          <Route path="/wishlist" element={<WishList />} />
+          <Route path="/auth" element={<Auth />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
