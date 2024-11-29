@@ -13,6 +13,25 @@ export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
   }));
 });
 
+// Fetch job by ID (for detailed view)
+export const fetchJobById = createAsyncThunk(
+  "jobs/fetchJobById",
+  async (id) => {
+    const response = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    );
+    const data = await response.json();
+    return {
+      id: data.id,
+      title: data.title,
+      description: data.body,
+      company: "Company XYZ",
+      location: +id % 2 === 0 ? "Remote" : "On-site",
+      salary: 60000,
+    };
+  }
+);
+
 const jobsSlice = createSlice({
   name: "jobs",
   initialState: {
@@ -24,6 +43,7 @@ const jobsSlice = createSlice({
     },
     sort: "none",
     status: "idle",
+    jobDetails: {},
   },
   reducers: {
     setFilter: (state, action) => {
@@ -65,6 +85,16 @@ const jobsSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(fetchJobs.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(fetchJobById.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchJobById.fulfilled, (state, action) => {
+        state.jobDetails = action.payload;
+        state.status = "succeeded";
+      })
+      .addCase(fetchJobById.rejected, (state) => {
         state.status = "failed";
       });
   },

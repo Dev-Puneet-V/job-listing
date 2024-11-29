@@ -7,7 +7,13 @@ const jobsSlice = createSlice({
   },
   reducers: {
     addInWishList: (state, action) => {
-      state.wishlistJobs = [...state.wishlistJobs, action.payload];
+      const jobExists = state.wishlistJobs.some(
+        (job) => job.id === action.payload.id
+      );
+
+      if (!jobExists) {
+        state.wishlistJobs = [...state.wishlistJobs, action.payload];
+      }
     },
     removeFromWishList: (state, action) => {
       state.wishlistJobs = state.wishlistJobs.filter(
